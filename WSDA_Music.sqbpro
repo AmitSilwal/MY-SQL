@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/ADMIN/Desktop/SQL Training/Ex_Files_SQL_EssT/Exercise Files/WSDA_Music.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3930"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:mainAlbum"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">/* Created By Amit B
+   Created Date 18-07-24
+   Description - This will display track names, composerm unitprice and categorizes each based in its price.
+                                                                         
+*/
+select Name as 'Track Name',
+       UnitPrice as Price,
+	   Composer,
+	   case
+	   when UnitPrice &lt;= 0.99 then 'Budget'
+	   when Unitprice &gt; 0.99 and &lt;= 1.49 then 'Regular'
+	   when UnitPrice  &gt; 1.49 and &lt;= 1.99 then 'Premium'
+	   else 'Exclusive'
+	   END AS PriceCategory
+FROM Track 
+order by UnitPrice asc;																 </sql><current_tab id="0"/></tab_sql></sqlb_project>

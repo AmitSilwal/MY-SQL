@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/ADMIN/Desktop/SQL Training/Ex_Files_SQL_EssT/Exercise Files/WSDA_Music.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3930"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:mainAlbum"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">/* Created By Amit B
+   Created Date 22nd Jul '24
+   Description - Subqueries | Gather data about all invoices that are less than this average?
+*/
+
+SELECT
+    BillingCity as City,
+	round(avg(total),2) as [AverageSpending]
+
+FROM
+   Invoice 
+
+SELECT
+     AVG(total)
+ FROM 
+     Invoice
+/* This is a nested query and it displays all the nvoices in decending order where total is &lt; average of total
+*/	 
+	 
+SELECT
+      BillingAddress,
+	  BillingCity,
+	  total
+FROM Invoice
+     WHERE 
+	    total &lt;
+		(SELECT AVG(TOTAL) FROM 
+		                   Invoice)
+ORDER BY 
+total DESC
+</sql><sql name="SQL 2">/* Created By Amit Biswakarma
+   Created Date 22nd Jul '24
+   Descrition - Aggregat Subqueries | How is each individual city is performing against global average?
+*/
+SELECT 
+     BillingCity,
+	 round(avg(total),2) as 'City Average',
+	 (select 
+	      avg(total)
+		   FROM 
+		       Invoice as [Global Average])
+
+FROM 
+    Invoice
+GROUP by BillingCity
+ORDER by BillingCity</sql><sql name="SQL 3">/*Creatd By Amit B
+  Created Date nd Jul '24
+  Description - Non- aggregate subqueries 
+*/
+
+SELECT
+      InvoiceDate,
+	  BillingAddress,
+	  BillingCity
+FROM
+    Invoice
+	
+WHERE InvoiceDate &gt;
+(SELECT
+     InvoiceDate
+	FROM
+	    Invoice
+WHERE InvoiceId =251)</sql><sql name="SQL 4">/* Created by Amit B
+   Created Date 22nd Jul '24
+   Description - IN Clause Subquery
+*/
+
+SELECT
+      InvoiceDate
+	  BillingCity,
+	  BillingAddress
+FROM 
+     Invoice
+WHERE 
+    InvoiceDate IN(SELECT
+     InvoiceDate
+FROM
+    Invoice
+WHERE 
+    InvoiceId IN (251,252,254))</sql><sql name="SQL 5">/* Created By Amit B
+   Created Date 22nd Jul '24
+   Description - DISTINCT clause Subquery | Which tracks are not selling?
+*/
+SELECT
+      TrackId,
+	  Composer,
+	  Name
+
+FROM
+    Track
+WHERE TrackId NOT in
+
+(SELECT
+   DISTINCT
+      TrackId
+FROM
+    InvoiceLine
+ORDER by 
+     TrackId)</sql><sql name="SQL 6">/* Created By Amit B
+   Created Date 22nd Jul 24
+   Description - Challenge 9 | This will display th tracks which is never sold.
+*/
+SELECT
+      t.TrackId as &quot;Track ID&quot;,
+	  t.Name as &quot;Track Name&quot;,
+	  t.Composer,
+	  g.Name as Genre
+
+FROM
+    Track t
+ JOIN Genre g on t.TrackId = g.GenreId
+ WHERE
+ t.TrackId NOT in	
+(SELECT
+     DISTINCT
+     InvoiceLine.TrackId
+FROM
+    InvoiceLine)
+order by 
+         &quot;Track Name&quot; ASC</sql><current_tab id="0"/></tab_sql></sqlb_project>

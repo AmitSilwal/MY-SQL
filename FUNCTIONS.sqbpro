@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/ADMIN/Desktop/SQL Training/Ex_Files_SQL_EssT/Exercise Files/WSDA_Music.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3930"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:mainAlbum"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Album" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="61"/><column index="2" value="219"/><column index="3" value="59"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">/* Created by Amit B
+   Created Date 18-07-24
+   Description FUNCTIONS
+*/
+
+/*Concatenate
+  Create Mailing address for Customer
+*/
+SELECT
+      FirstName,
+	  LastName,
+	  Address,
+	  FirstName||''||LastName||''||Address|| ',' ||City||''||State||''||PostalCode as [Mailling Address]
+FROM Customer
+where 
+Country = 'USA'
+
+-- Ensure an index exists on the Country column
+CREATE INDEX idx_country ON Customer(Country);
+
+-- Optimized query
+SELECT
+    FirstName,
+    LastName,
+    Address,
+    CONCAT(FirstName, ' ', LastName, ' ', Address, ', ', City, ' ', State, ' ', PostalCode) AS MailingAddress
+FROM
+    Customer
+WHERE
+    Country = 'USA';
+	
+	SELECT
+      FirstName,
+	  LastName,
+	  Address,
+	  FirstName||''||LastName||''||Address|| ',' ||City||''||State||''||PostalCode as [Mailling Address],
+	  substr(PostalCode,1,5) as [Postalcode]
+FROM Customer
+where 
+Country = 'USA'
+
+/* Created By Amit B
+   Created Date 20th Jul '24
+   Description - It calculates the age of all employees
+*/
+
+SELECT
+     FirstName,
+	 LastName,
+	 BirthDate,
+	 strftime('%Y-%m-%d',birthdate) as [Birthdate with no time],
+	 strftime('%Y-%m-%d','now')- strftime('%Y-%m-%d',birthdate) as Age
+FROM 
+   Employee
+   
+/* Description - Aggregate function - What are out total all time global sales? */
+
+SELECT
+     SUM(TOTAL) AS [Total Sales],
+	round(avg(total),2) as [Average Sales],
+	 max(total) as [Maximum Sales],
+	 min(total) as  [Minimum Sales],
+	 count(*) as [Sales Count]
+
+FROM 
+   Invoice</sql><current_tab id="0"/></tab_sql></sqlb_project>
